@@ -1,12 +1,14 @@
+import type {ReactNode} from "react";
+
 interface FooterProps {
-    title: string;
+    children?: ReactNode;
 }
 
-const Footer= ({title}: FooterProps) => {
+const Footer= ({children}: FooterProps) => {
     return (
         <footer className="flex justify-center py-3 bg-gray-800 fixed bottom-0 left-0 w-full">
             <p className="text-gray-200 text-center">
-                Copyright © {title}
+                Copyright © {children ?? 'Media Conversion Service'} 2026
             </p>
         </footer>
     )

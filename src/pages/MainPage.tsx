@@ -8,18 +8,15 @@ const App = () => {
     return (
         <>
             <Header
-                title={TITLE}
                 links={[
-                    {text: 'Загрузить', href: '#upload'},
-                    {text: 'О нас', href: '#about'}
+                    {children: <>Загрузить</>, href: '#upload'},
+                    {children: <>О нас</>, href: '#about'}
                 ]}
-            />
+            >{TITLE}</Header>
 
             <Upload/>
 
-            <Footer
-                title={TITLE}
-            />
+            <Footer>{TITLE}</Footer>
         </>
     )
 }
