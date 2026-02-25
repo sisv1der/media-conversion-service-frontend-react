@@ -1,18 +1,17 @@
-import type React from "react"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
-import Upload from "../components/Upload"
+import Header from "../components/common/Header.tsx"
+import Footer from "../components/common/Footer.tsx"
+import Upload from "../components/upload/Upload.tsx"
 
 const TITLE = 'Media Conversion Service';
 
-const App: React.FC = () => {
+const App = () => {
     return (
         <>
             <Header
                 title={TITLE}
                 links={[
-                    {id: 1, text: 'Загрузить', href: '#upload'},
-                    {id: 2, text: 'О нас', href: '#about'}
+                    {text: 'Загрузить', href: '#upload'},
+                    {text: 'О нас', href: '#about'}
                 ]}
             />
 

@@ -1,6 +1,4 @@
-import type React from "react";
-
-const Upload: React.FC = () => {
+const Upload = () => {
     return (
         <section className="flex flex-col items-center min-h-max">
             <div className="flex flex-col py-30 px-4 bg-gray-50">
@@ -44,4 +42,4 @@ const Upload: React.FC = () => {
     )
 }
 
-export default Upload
+export default Upload;
