@@ -1,20 +1,24 @@
-export const FORMAT_MAP = {
-    image: {
-        input: ['png', 'jpg', 'jpeg'],
-        output: ['png', 'jpg']
-    },
-    audio: {
-        input: ['mp3', 'wav'],
-        output: ['mp3', 'wav']
-    },
-    video: {
-        input: ['mp4', 'webm'],
-        output: ['mp4', 'webm']
-    }
+export const formats = {
+    png: "PNG",
+    mp3: "MP3",
+    mp4: "MP4",
+    webm: "WEBM",
+    wav: "WAV",
+    jpg: "JPG",
 } as const
 
-export type MediaType = keyof typeof FORMAT_MAP
+export type FormatKey = keyof typeof formats
+export type FormatLabel = typeof formats[FormatKey]
 
-export type InputFormat<T extends MediaType> = typeof FORMAT_MAP[T]['input'][number]
+const compatibleFormats: Record<FormatLabel, FormatLabel[]> = {
+    PNG: ['JPG'],
+    JPG: ['PNG'],
+    MP3: ['WAV'],
+    WAV: ['MP3'],
+    MP4: ['WEBM'],
+    WEBM: ['MP4'],
+}
 
-export type OutputFormat<T extends MediaType> = typeof FORMAT_MAP[T]['output'][number]
+export const getCompatibleFormats = (inputFormat: FormatLabel): FormatLabel[] => {
+    return compatibleFormats[inputFormat] ?? []
+}
