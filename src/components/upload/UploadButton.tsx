@@ -1,11 +1,7 @@
-import type {ReactNode} from "react";
+import * as React from "react";
 
-interface UploadButtonProps {
-    children?: ReactNode;
-    onClick?: () => void;
-    disabled?: boolean;
+interface UploadButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string;
-    type?: 'button' | 'submit' | 'reset';
 }
 
 const UploadButton = ({
