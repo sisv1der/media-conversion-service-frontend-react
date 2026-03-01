@@ -5,15 +5,19 @@ import type {DragEvent} from "react";
 
 interface FileDropSectionProps {
     onFileSelect: (file: File) => void;
+    moveForward: () => void
 }
 
-const FileDropSection = ({onFileSelect}: FileDropSectionProps) => {
+const FileDropSection = (
+    {onFileSelect, moveForward}: FileDropSectionProps
+) => {
     const inputRef = useRef<HTMLInputElement>(null)
 
     const handleDrop = (e: DragEvent<HTMLDivElement>)=> {
         e.preventDefault()
         if (e.dataTransfer.files.length) {
             onFileSelect(e.dataTransfer.files[0])
+            moveForward()
         }
     }
 
@@ -39,13 +43,20 @@ const FileDropSection = ({onFileSelect}: FileDropSectionProps) => {
                     ref={inputRef}
                     type="file"
                     className="hidden"
-                    onChange={(e) => e.target.files && onFileSelect(e.target.files[0])}
+                    onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (!file) return
+
+                        onFileSelect(file)
+                        moveForward()
+                    }}
                 />
 
                 <UploadButton
                     className={'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500'}
                     onClick={() => inputRef.current?.click()}
                 />
+
             </div>
         </div>
     )
