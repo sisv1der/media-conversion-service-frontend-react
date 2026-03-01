@@ -7,6 +7,7 @@ import {createJob} from "../../api/jobs.ts";
 import type {Job} from "../../types/Job.ts";
 
 const UploadSection = () => {
+    const [ UPLOAD, SELECT_FORMAT, CONFIRM ] = ['UPLOAD', 'SELECT_FORMAT', 'CONFIRM'] as const
     type Step = 'UPLOAD' | 'SELECT_FORMAT' | 'CONFIRM'
 
     const [step, setStep] = useState<Step>('UPLOAD')
@@ -17,10 +18,10 @@ const UploadSection = () => {
     const moveForward = () => {
         setStep(prev => {
             switch (prev) {
-                case 'UPLOAD':
-                    return 'SELECT_FORMAT'
-                case 'SELECT_FORMAT':
-                    return 'CONFIRM'
+                case UPLOAD:
+                    return SELECT_FORMAT
+                case SELECT_FORMAT:
+                    return CONFIRM
                 default:
                     return prev
             }
@@ -30,7 +31,7 @@ const UploadSection = () => {
     const handleReset = () => {
         setSelectedFile(null)
         setSelectedFormat(null)
-        setStep('UPLOAD')
+        setStep(UPLOAD)
     }
 
     const handleConfirmation = async () => {
@@ -55,14 +56,14 @@ const UploadSection = () => {
                 <UploadHeader/>
             </div>
             <div className="flex flex-col py-30 px-4 bg-gray-50 items-center justify-center">
-                {step === 'UPLOAD' && (
+                {step === UPLOAD && (
                     <FileDropSection
                         onFileSelect={(file: File) => setSelectedFile(file)}
                         moveForward={moveForward}
                     />
                 )}
 
-                {step === 'SELECT_FORMAT' && selectedFile && (
+                {step === SELECT_FORMAT && selectedFile && (
                     <SelectFormatSection
                         inputFormat={getInputFormat(selectedFile)!}
                         onSelect={(format) => {
@@ -73,7 +74,7 @@ const UploadSection = () => {
                     />
                 )}
 
-                {step === 'CONFIRM' && selectedFormat && selectedFile && (
+                {step === CONFIRM && selectedFormat && selectedFile && (
                     <SelectFormatSection
                         inputFormat={getInputFormat(selectedFile)!}
                         selectedFormat={selectedFormat}
@@ -85,7 +86,7 @@ const UploadSection = () => {
 
                 {jobs.length > 0 && (
                     <>
-                        {/* тут будет компонент списка задач */}
+                        {/* тут будет компонент списка задач6 */}
                     </>
                 )}
             </div>
