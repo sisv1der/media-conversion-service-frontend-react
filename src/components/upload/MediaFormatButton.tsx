@@ -1,4 +1,4 @@
-import type {FormatLabel} from "./MediaFormat.ts";
+import type {FormatLabel} from "../../types/MediaFormat.ts";
 
 interface MediaFormatButtonProps {
     format: FormatLabel;

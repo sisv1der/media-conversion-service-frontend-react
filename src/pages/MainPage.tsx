@@ -1,6 +1,6 @@
 import Header from "../components/common/Header.tsx"
 import Footer from "../components/common/Footer.tsx"
-import Upload from "../components/upload/Upload.tsx"
+import UploadSection from "../components/upload/UploadSection.tsx"
 
 const TITLE = 'Media Conversion Service';
 
@@ -14,7 +14,7 @@ const App = () => {
                 ]}
             >{TITLE}</Header>
 
-            <Upload/>
+            <UploadSection/>
 
             <Footer>{TITLE}</Footer>
         </>
