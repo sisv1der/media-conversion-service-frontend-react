@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CreateJobResponse, Job} from "../types/Job.ts";
+import type {CreateJobResponse, Job} from "../types/Job.ts";
 import {type FormatKey, type FormatLabel, formats} from "../types/MediaFormat.ts";
 
 const apiClient = axios.create({
