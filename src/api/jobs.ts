@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CreateJobResponse, Job} from "../types/Job.ts";
+import type {CreateJobResponse, Job, ReadBatchJobStatusResponse} from "../types/Job.ts";
 import {type FormatKey, type FormatLabel, formats} from "../types/MediaFormat.ts";
 
 const apiClient = axios.create({
@@ -41,4 +41,46 @@ export const createJob = async (
         outputFormat: outputFormat,
         filename: file.name
     }
+}
+
+export const fetchJobs = async (
+    ids: string[]
+): Promise<ReadBatchJobStatusResponse> => {
+    if (ids.length === 0) {
+        return {
+            jobs: []
+        }
+    }
+    const { data } = await apiClient.get(
+        `/jobs`,
+        { params: { ids } }
+    )
+
+    return data
+}
+
+export const downloadJob = async (jobId: string) => {
+    const response = await apiClient.get(
+        `/jobs/${jobId}/file`,
+        {
+            responseType: 'formdata',
+        },
+    )
+
+    const blob = response.data
+    const disposition = response.headers['content-disposition']
+    let filename = 'result'
+
+    if (disposition) {
+        const match = disposition.match(/filename="(.+)"/)
+        if (match) filename = match[1]
+    }
+
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    a.click()
+
+    URL.revokeObjectURL(url)
 }

@@ -1,10 +1,11 @@
 import FileDropSection from "./FileDropSection.tsx";
 import UploadHeader from "./UploadHeader.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SelectFormatSection from "./SelectFormatSection.tsx";
 import {type FormatKey, type FormatLabel, formats} from "../../types/MediaFormat.ts";
-import {createJob} from "../../api/jobs.ts";
+import {createJob, fetchJobs} from "../../api/jobs.ts";
 import type {Job} from "../../types/Job.ts";
+import JobListSection from "./JobListSection.tsx";
 
 const UploadSection = () => {
     const [ UPLOAD, SELECT_FORMAT, CONFIRM ] = ['UPLOAD', 'SELECT_FORMAT', 'CONFIRM'] as const
@@ -50,6 +51,34 @@ const UploadSection = () => {
         return formats[ext]
     }
 
+    useEffect(() => {
+        if (jobs.length === 0) return
+
+        const interval = setInterval(async () => {
+            const ids = jobs
+                .filter(job => job.status !== 'FAILED' && job.status !== 'DONE')
+                .map(job => job.id)
+
+            const updatedJobs = (await fetchJobs(ids)).jobs;
+
+            setJobs(prev => {
+                return prev.map(job => {
+                    const updated = updatedJobs.find(_job => _job.jobId === job.id)
+                    if (!updated) return job
+                    return {
+                        id: updated.jobId,
+                        status: updated.jobStatus,
+                        inputFormat: job.inputFormat,
+                        outputFormat: job.outputFormat,
+                        filename: job.filename
+                    }
+                })
+            })
+        }, 3000)
+
+        return () => clearInterval(interval)
+    }, [jobs])
+
     return (
         <section className="flex flex-col items-center min-h-max">
             <div className="py-10">
@@ -85,9 +114,7 @@ const UploadSection = () => {
                 )}
 
                 {jobs.length > 0 && (
-                    <>
-                        {/* тут будет компонент списка задач6 */}
-                    </>
+                    <JobListSection jobs={jobs}/>
                 )}
             </div>
         </section>
