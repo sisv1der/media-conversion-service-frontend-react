@@ -63,7 +63,7 @@ export const downloadJob = async (jobId: string) => {
     const response = await apiClient.get(
         `/jobs/${jobId}/file`,
         {
-            responseType: 'formdata',
+            responseType: 'blob',
         },
     )
 
