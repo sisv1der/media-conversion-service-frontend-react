@@ -3,7 +3,7 @@ import type {CreateJobResponse, Job, ReadBatchJobStatusResponse} from "../types/
 import {type FormatKey, type FormatLabel, formats} from "../types/MediaFormat.ts";
 
 const apiClient = axios.create({
-    baseURL: 'https://localhost:8080/api/v2',
+    baseURL: 'http://localhost:8080/api/v2',
     headers: {
         'Content-Type': 'application/json',
     },
