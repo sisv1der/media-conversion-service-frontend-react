@@ -2,8 +2,10 @@ import axios from "axios";
 import type {CreateJobResponse, Job, ReadBatchJobStatusResponse} from "../types/Job.ts";
 import {type FormatKey, type FormatLabel, formats} from "../types/MediaFormat.ts";
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/api/v2',
+    baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
     },
